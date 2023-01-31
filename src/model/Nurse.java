@@ -7,11 +7,7 @@ private String speciality;
         super(name, email);
     }
 
-    @Override
-    public void showDataUser() {
-        System.out.println("Empleada del Hospital Mazatenango");
-        System.out.println("Embarazos, pediatría, emergencias");
-    }
+
 
     public String getSpeciality() {
         return speciality;

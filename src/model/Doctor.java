@@ -1,5 +1,7 @@
 package model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -7,15 +9,12 @@ public class Doctor extends User {
 
 
     private String speciality;
+    private ArrayList<AvailableAppointment> availableAppointments = new ArrayList<>(); //ArrayList == object
     public Doctor(String name, String email){
         super(name, email);
     }
 
-    @Override
-    public void showDataUser() {
-        System.out.println("Empleado del Hospital Mazatenango\n");
-        System.out.println("Departamento de Embarazo\n");
-    }
+
 
     public String getSpeciality() {
         return speciality;
@@ -26,9 +25,10 @@ public class Doctor extends User {
     }
 
     //Add cites in class AvailableAppointment using ArrayList
-    ArrayList<AvailableAppointment> availableAppointments = new ArrayList<>(); //ArrayList == object
-    public void addAvailableAppointment(Date date, String time){ //Method for add parameters in class AvailableAppointment
-        availableAppointments.add(new AvailableAppointment(date, time)); //Using ArrayList with method constructor.
+
+    public void addAvailableAppointment(String date, String time){ //Method for add parameters in class AvailableAppointment
+
+        availableAppointments.add(new Doctor.AvailableAppointment(date, time)); //Using ArrayList with method constructor.
     }
 
     public ArrayList<AvailableAppointment> getAvailableAppointments(){ //return cites
@@ -44,11 +44,18 @@ public class Doctor extends User {
         private int id;
         private Date date;
         private String time;
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");//formatea fecha
 
-        public AvailableAppointment(Date date, String time) {
-            this.date = date;
+        public AvailableAppointment(String date, String time) {
+
+            try {
+                this.date = format.parse(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             this.time = time;
         }
+
 
         public int getId() {
             return id;
@@ -58,8 +65,12 @@ public class Doctor extends User {
             this.id = id;
         }
 
-        public Date getDate() {
+        public Date getDate(String DATE) {
             return date;
+        }
+
+        public String getDate() {
+            return format.format(date);
         }
 
         public void setDate(Date date) {
@@ -72,6 +83,14 @@ public class Doctor extends User {
 
         public void setName(String name) {
             this.time = name;
+        }
+
+        public String getTime() {
+            return time;
+        }
+
+        public void setTime(String time) {
+            this.time = time;
         }
 
         @Override
